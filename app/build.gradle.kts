@@ -7,6 +7,10 @@ android {
     namespace = "com.example.applistadecompras"
     compileSdk = 34
 
+    buildFeatures{
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.applistadecompras"
         minSdk = 24
@@ -37,6 +41,7 @@ android {
 
 dependencies {
 
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
