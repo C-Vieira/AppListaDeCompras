@@ -1,5 +1,6 @@
 package com.example.applistadecompras
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -37,7 +38,10 @@ class MainActivity : AppCompatActivity() {
             .into(binding.imageView)
 
         binding.accountRegisterButton.setOnClickListener{
-            this.setContentView(layout.user_register_view)
+            //Invoke UserRegisterActivity
+            Intent(applicationContext, UserRegisterActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 }
