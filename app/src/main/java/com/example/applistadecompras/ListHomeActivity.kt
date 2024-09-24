@@ -51,6 +51,9 @@ class ListHomeActivity: Activity() {
     }
 
     private fun onListItemClicked(list: ShoppingList){
-        Snackbar.make(findViewById(android.R.id.content), "Lista: ${list.title}", Snackbar.LENGTH_LONG).show()
+        // Invoke ListItemsActivity
+        Intent(applicationContext, ListItemsActivity::class.java).also {
+            startActivity(it)
+        }
     }
 }
