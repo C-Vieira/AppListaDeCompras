@@ -27,6 +27,7 @@
 
         <activity android:name=".UserRegisterActivity" />
         <activity android:name=".ListHomeActivity" />
+        <activity android:name=".ListAddActivity" />
 
     </application>
 

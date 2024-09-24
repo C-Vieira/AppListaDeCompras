@@ -54,6 +54,9 @@ class MainActivity : AppCompatActivity() {
                         // TODO: Pass in current Active User
                         startActivity(it)
                     }
+
+                    binding.emailTxtField.text.clear()
+                    binding.passwordTxtField.text.clear()
                 }else{
                     Snackbar.make(findViewById(android.R.id.content), "Senha Incorreta", Snackbar.LENGTH_LONG).show()
                     binding.passwordTxtField.text.clear()
