@@ -15,18 +15,27 @@ class UserRegisterActivity : Activity() {
         setContentView(binding.root)
 
         binding.registerButton.setOnClickListener{
-            if(!binding.nameTxtField.text.isNullOrEmpty()){
-                if(!binding.emailTxtField.text.isNullOrEmpty()){
-                    if(!binding.passwordTxtField.text.isNullOrEmpty()){
-                        if(!binding.confirmPasswordTxtField.text.isNullOrEmpty()){
-                            if(binding.passwordTxtField.text.toString() == binding.confirmPasswordTxtField.text.toString()){
-                                val name: String = binding.nameTxtField.text.toString()
-                                val email: String = binding.emailTxtField.text.toString()
-                                val password: String = binding.passwordTxtField.text.toString()
+            val nameTxtFieldString = binding.nameTxtField.text.toString()
+            val emailTxtFieldString = binding.emailTxtField.text.toString()
+            val passwordTxtFieldString = binding.passwordTxtField.text.toString()
+            val confirmPasswordTxtFieldString = binding.confirmPasswordTxtField.text.toString()
+
+            if(nameTxtFieldString.isNotEmpty()){
+                if(emailTxtFieldString.isNotEmpty()){
+                    if(passwordTxtFieldString.isNotEmpty()){
+                        if(confirmPasswordTxtFieldString.isNotEmpty()){
+
+                            // Check if Password equals Confirmed Password
+                            if(passwordTxtFieldString == confirmPasswordTxtFieldString){
+                                val name: String = nameTxtFieldString
+                                val email: String = emailTxtFieldString
+                                val password: String = passwordTxtFieldString
 
                                 UserDataBase.addUser(User(name, email, password))
 
                                 Snackbar.make(findViewById(android.R.id.content), "Usuário Cadastrado com Sucesso!", Snackbar.LENGTH_LONG).show()
+
+                                clearTextFields()
                             }else{
                                 Snackbar.make(findViewById(android.R.id.content), "Senha e Confirmação Diferentes", Snackbar.LENGTH_LONG).show()
                             }
@@ -38,5 +47,12 @@ class UserRegisterActivity : Activity() {
             }
         }
 
+    }
+
+    private fun clearTextFields(){
+        binding.nameTxtField.text.clear()
+        binding.emailTxtField.text.clear()
+        binding.passwordTxtField.text.clear()
+        binding.confirmPasswordTxtField.text.clear()
     }
 }

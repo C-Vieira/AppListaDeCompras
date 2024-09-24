@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.applistadecompras.R.*
 import com.example.applistadecompras.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,8 +38,35 @@ class MainActivity : AppCompatActivity() {
             .error(ColorDrawable(Color.LTGRAY))
             .into(binding.imageView)
 
+        binding.loginButton.setOnClickListener{
+            val emailString = binding.emailTxtField.text.toString()
+            val passwordString = binding.passwordTxtField.text.toString()
+
+            // Get User from UserDataBase
+            val user = UserDataBase.findUserByEmail(emailString)
+
+            // Check if User Exists
+            if(user != null) {
+                // Check if Password Matches
+                if(passwordString == user.userPassword){
+                    // Invoke ListHomeActivity
+                    Intent(applicationContext, ListHomeActivity::class.java).also {
+                        // TODO: Pass in current Active User
+                        startActivity(it)
+                    }
+                }else{
+                    Snackbar.make(findViewById(android.R.id.content), "Senha Incorreta", Snackbar.LENGTH_LONG).show()
+                    binding.passwordTxtField.text.clear()
+                }
+            }else{
+                Snackbar.make(findViewById(android.R.id.content), "Usuário Inexistente", Snackbar.LENGTH_LONG).show()
+                binding.emailTxtField.text.clear()
+                binding.passwordTxtField.text.clear()
+            }
+        }
+
         binding.accountRegisterButton.setOnClickListener{
-            //Invoke UserRegisterActivity
+            // Invoke UserRegisterActivity
             Intent(applicationContext, UserRegisterActivity::class.java).also {
                 startActivity(it)
             }
