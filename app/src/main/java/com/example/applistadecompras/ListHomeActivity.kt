@@ -17,6 +17,8 @@ class ListHomeActivity: Activity() {
         binding = ListHomeViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Snackbar.make(findViewById(android.R.id.content), "Bem Vindo ${UserDataBase.currentUser.userName}", Snackbar.LENGTH_LONG).show()
+
         val testList = listOf(
             ShoppingList("Teste1", "https://www.gstatic.com/webp/gallery/1.jpg"),
             ShoppingList("Teste2", "https://www.gstatic.com/webp/gallery/2.jpg"),
@@ -32,7 +34,10 @@ class ListHomeActivity: Activity() {
             ShoppingList("Teste12", null)
         )
 
-        val adapter = ShoppingListAdapter(testList, ::onListItemClicked)
+        // Get lists from current user
+        val listSource = UserDataBase.currentUser.userLists
+
+        val adapter = ShoppingListAdapter(listSource, ::onListItemClicked)
         val layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
 
         binding.shoppingListRecylerview.adapter = adapter

@@ -49,9 +49,11 @@ class MainActivity : AppCompatActivity() {
             if(user != null) {
                 // Check if Password Matches
                 if(passwordString == user.userPassword){
+                    // Set Current User
+                    UserDataBase.currentUser = user
+
                     // Invoke ListHomeActivity
                     Intent(applicationContext, ListHomeActivity::class.java).also {
-                        // TODO: Pass in current Active User
                         startActivity(it)
                     }
 
