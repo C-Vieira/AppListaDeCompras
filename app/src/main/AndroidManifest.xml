@@ -29,6 +29,7 @@
         <activity android:name=".ListHomeActivity" />
         <activity android:name=".ListAddActivity" />
         <activity android:name=".ListItemsActivity" />
+        <activity android:name=".ListItemAddActivity" />
 
     </application>
 

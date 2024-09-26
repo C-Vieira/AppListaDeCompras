@@ -1,6 +1,7 @@
 package com.example.applistadecompras
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applistadecompras.databinding.ListItemsViewBinding
@@ -36,6 +37,12 @@ class ListItemsActivity: Activity() {
         binding.shoppingListItemsRecylerview.adapter = adapter
         binding.shoppingListItemsRecylerview.layoutManager = layoutManager
 
+        binding.addListItemButton.setOnClickListener {
+            // Invoke ListItemAddActivity
+            Intent(applicationContext, ListItemAddActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
     private fun onListItemClicked(item: ShoppingListItem){
