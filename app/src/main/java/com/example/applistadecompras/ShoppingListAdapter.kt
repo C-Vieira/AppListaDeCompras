@@ -33,7 +33,7 @@ class ShoppingListAdapter (
             binding.listTextView.text = item.title
             Glide.with(binding.root.context)
                 .load(item.imageUrl)
-                .error("https://i0.wp.com/espaferro.com.br/wp-content/uploads/2024/06/placeholder-103.png?ssl=1")
+                .error( item.imageUrl ?: "https://i0.wp.com/espaferro.com.br/wp-content/uploads/2024/06/placeholder-103.png?ssl=1")
                 .placeholder(ColorDrawable(Color.LTGRAY))
                 .centerCrop()
                 .into(binding.listImageView)

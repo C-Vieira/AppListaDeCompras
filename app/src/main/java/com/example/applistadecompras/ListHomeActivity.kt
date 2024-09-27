@@ -50,7 +50,6 @@ class ListHomeActivity: Activity() {
         binding.addListButton.setOnClickListener{
             // Invoke ListAddActivity
             Intent(applicationContext, ListAddActivity::class.java).also {
-                //it.putExtra("CURRENT_USER", currentUser)
                 startActivity(it)
             }
         }

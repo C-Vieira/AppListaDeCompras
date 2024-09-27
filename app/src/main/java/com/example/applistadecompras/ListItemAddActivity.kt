@@ -45,13 +45,20 @@ class ListItemAddActivity: Activity(), AdapterView.OnItemSelectedListener {
         binding.itemAddButton.setOnClickListener{
             val name = binding.itemTitleTxtField.text.toString()
             val icon = null
-            val amount = binding.itemAmountTxtField.text.toString().toInt()
+            val amount = binding.itemAmountTxtField.text.toString()
             val unit = binding.itemUnitSpinner.selectedItem.toString()
             val category = binding.itemCategorySpinner.selectedItem.toString()
 
-            UserDataBase.currentList.listItems.add(ShoppingListItem(name, icon, amount, unit, category))
+            if(name.isNotEmpty() and amount.isNotEmpty()){
+                UserDataBase.currentList.listItems.add(ShoppingListItem(name, icon, amount.toInt(), unit, category))
 
-            Snackbar.make(findViewById(android.R.id.content), "Item Criado com Sucesso!", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(findViewById(android.R.id.content), "Item Criado com Sucesso!", Snackbar.LENGTH_SHORT).show()
+
+                binding.itemTitleTxtField.text.clear()
+                binding.itemAmountTxtField.text.clear()
+            }else{
+                Snackbar.make(findViewById(android.R.id.content), "Por Favor, Preencha todos os Campos", Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 
