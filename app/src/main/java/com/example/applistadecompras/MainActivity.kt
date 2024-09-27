@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             if(user != null) {
                 // Check if Password Matches
                 if(passwordString == user.userPassword){
-                    // Set Current User
+
                     UserDataBase.currentUser = user
 
                     // Invoke ListHomeActivity

@@ -28,12 +28,19 @@ class ListAddActivity: Activity() {
             .into(binding.listImageView)
 
         binding.listAddButton.setOnClickListener {
-            val listName = binding.listTitleTxtField.text.toString()
+
             val listImageUrl = null
 
-            UserDataBase.currentUser.userLists.add(ShoppingList(listName, listImageUrl))
+            if(binding.listTitleTxtField.text.isNotEmpty()){
+                val listName = binding.listTitleTxtField.text.toString()
 
-            Snackbar.make(findViewById(android.R.id.content), "Nova Lista Criada Com Sucesso!", Snackbar.LENGTH_SHORT).show()
+                UserDataBase.currentUser.userLists.add(ShoppingList(listName, listImageUrl))
+
+                Snackbar.make(findViewById(android.R.id.content), "Nova Lista Criada Com Sucesso!", Snackbar.LENGTH_SHORT).show()
+            }else{
+                Snackbar.make(findViewById(android.R.id.content), "Nome da Lista Vazio", Snackbar.LENGTH_SHORT).show()
+            }
+
             binding.listTitleTxtField.text.clear()
         }
     }

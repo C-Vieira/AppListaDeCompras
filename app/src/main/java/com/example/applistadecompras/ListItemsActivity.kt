@@ -16,7 +16,7 @@ class ListItemsActivity: Activity() {
         binding = ListItemsViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val testList = listOf(
+        /*val testList = listOf(
             ShoppingListItem("Item1", null),
             ShoppingListItem("Item2", null),
             ShoppingListItem("Item3", null),
@@ -29,9 +29,15 @@ class ListItemsActivity: Activity() {
             ShoppingListItem("Item10", null),
             ShoppingListItem("Item11", null),
             ShoppingListItem("Item12", null)
-        )
+        )*/
 
-        val adapter = ShoppingListItemAdapter(testList, ::onListItemClicked)
+        // Get listName
+        binding.listItemsHeader.text = UserDataBase.currentList.title
+
+        // Get listItemsSource from Current List
+        val listItemsSource = UserDataBase.currentList.listItems
+
+        val adapter = ShoppingListItemAdapter(listItemsSource, ::onListItemClicked)
         val layoutManager = LinearLayoutManager(this)
 
         binding.shoppingListItemsRecylerview.adapter = adapter
@@ -47,5 +53,13 @@ class ListItemsActivity: Activity() {
 
     private fun onListItemClicked(item: ShoppingListItem){
         Snackbar.make(findViewById(android.R.id.content), "Item: ${item.name}", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Update Recycler View Data Source
+        val listItemsSource = UserDataBase.currentList.listItems
+        binding.shoppingListItemsRecylerview.adapter = ShoppingListItemAdapter(listItemsSource, ::onListItemClicked)
     }
 }

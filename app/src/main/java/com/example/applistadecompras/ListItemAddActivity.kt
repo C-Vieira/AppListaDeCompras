@@ -41,6 +41,18 @@ class ListItemAddActivity: Activity(), AdapterView.OnItemSelectedListener {
             // Apply the adapter to the spinner
             categorySpinner.adapter = adapter
         }
+
+        binding.itemAddButton.setOnClickListener{
+            val name = binding.itemTitleTxtField.text.toString()
+            val icon = null
+            val amount = binding.itemAmountTxtField.text.toString().toInt()
+            val unit = binding.itemUnitSpinner.selectedItem.toString()
+            val category = binding.itemCategorySpinner.selectedItem.toString()
+
+            UserDataBase.currentList.listItems.add(ShoppingListItem(name, icon, amount, unit, category))
+
+            Snackbar.make(findViewById(android.R.id.content), "Item Criado com Sucesso!", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     // NOTE: This is called immediately when the activity is invoked

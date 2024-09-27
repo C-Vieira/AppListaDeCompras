@@ -31,6 +31,8 @@ class ShoppingListItemAdapter (
             currentItem = item
 
             binding.listItemName.text = item.name
+            binding.listItemAmount.text = item.amount.toString() + " " + item.unit
+
             Glide.with(binding.root.context)
                 .load(item.iconUrl)
                 .error(ColorDrawable(Color.BLACK))
