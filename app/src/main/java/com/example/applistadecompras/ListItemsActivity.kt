@@ -49,14 +49,30 @@ class ListItemsActivity: Activity() {
                 startActivity(it)
             }
         }
+
+        binding.listEditButton.setOnClickListener {
+            // Invoke ListAddActivity for Editing
+            Intent(applicationContext, ListAddActivity::class.java).also {
+                it.putExtra("EDIT_MODE", true)
+                startActivity(it)
+            }
+        }
     }
 
     private fun onListItemClicked(item: ShoppingListItem){
-        Snackbar.make(findViewById(android.R.id.content), "Item: ${item.name}", Snackbar.LENGTH_LONG).show()
+        // Invoke ListItemAddActivity for Editing
+        Intent(applicationContext, ListItemAddActivity::class.java).also {
+            UserDataBase.currentListItem = item
+            it.putExtra("EDIT_MODE", true)
+            startActivity(it)
+        }
     }
 
     override fun onResume() {
         super.onResume()
+
+        // Update listName
+        binding.listItemsHeader.text = UserDataBase.currentList.title
 
         // Update Recycler View Data Source
         val listItemsSource = UserDataBase.currentList.listItems

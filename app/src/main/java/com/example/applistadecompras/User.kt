@@ -10,6 +10,7 @@ object UserDataBase{
     private val users = mutableListOf(User("admin", "admin", "admin"))
     var currentUser: User = User("empty", "empty", "empty")
     var currentList: ShoppingList = ShoppingList("empty", "empty", mutableListOf())
+    var currentListItem: ShoppingListItem = ShoppingListItem("empty", null, 0, "un", "fruta")
 
     fun addUser(newUser: User){
         users.add(newUser)

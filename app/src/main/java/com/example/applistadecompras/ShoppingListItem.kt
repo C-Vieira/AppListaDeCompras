@@ -1,9 +1,11 @@
 package com.example.applistadecompras
 
+import java.io.Serializable
+
 class ShoppingListItem (
-    val name: String,
-    val iconUrl: String?,
-    val amount: Int,
-    val unit: String,
-    val category: String
-)
+    var name: String,
+    var iconUrl: String?,
+    var amount: Int,
+    var unit: String,
+    var category: String
+): Serializable

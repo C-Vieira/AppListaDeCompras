@@ -44,7 +44,12 @@ class ListHomeActivity: Activity() {
         binding.shoppingListRecylerview.layoutManager = layoutManager
 
         binding.logoutButton.setOnClickListener{
-            //TODO Pop back to login view
+            // Pop back to login screen
+            finish()
+
+            // Reset Current User and List
+            UserDataBase.currentUser = User("empty", "empty", "empty")
+            UserDataBase.currentList = ShoppingList("empty", "empty", mutableListOf())
         }
 
         binding.addListButton.setOnClickListener{

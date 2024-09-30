@@ -32,7 +32,20 @@ class ListAddActivity: AppCompatActivity() {
         binding = ListAddViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        showImage()
+        val editMode: Boolean = intent.getBooleanExtra("EDIT_MODE", false)
+
+        if(editMode){
+            binding.listAddHeader.text = "Editar Lista"
+            binding.listAddButton.text = "Editar"
+
+            // Fill in with current values
+            binding.listTitleTxtField.hint = UserDataBase.currentList.title
+            showImage(UserDataBase.currentList.imageUrl)
+
+            // Show delete button
+        }else{
+            showImage()
+        }
 
         binding.listAddButton.setOnClickListener {
 
@@ -41,14 +54,22 @@ class ListAddActivity: AppCompatActivity() {
             if(binding.listTitleTxtField.text.isNotEmpty()){
                 val listName = binding.listTitleTxtField.text.toString()
 
-                UserDataBase.currentUser.userLists.add(ShoppingList(listName, listImageUrl))
+                if(editMode){
+                    UserDataBase.currentList.title = listName
+                    UserDataBase.currentList.imageUrl = listImageUrl
 
-                Snackbar.make(findViewById(android.R.id.content), "Nova Lista Criada Com Sucesso!", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(findViewById(android.R.id.content), "Lista: ${UserDataBase.currentList.title} Editada Com Sucesso!", Snackbar.LENGTH_SHORT).show()
+                }else{
+                    UserDataBase.currentUser.userLists.add(ShoppingList(listName, listImageUrl))
+
+                    Snackbar.make(findViewById(android.R.id.content), "Nova Lista Criada Com Sucesso!", Snackbar.LENGTH_SHORT).show()
+
+                    binding.listTitleTxtField.text.clear()
+                }
             }else{
                 Snackbar.make(findViewById(android.R.id.content), "Nome da Lista Vazio", Snackbar.LENGTH_SHORT).show()
             }
 
-            binding.listTitleTxtField.text.clear()
         }
 
         binding.pickImageButton.setOnClickListener{

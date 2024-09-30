@@ -2,6 +2,7 @@ package com.example.applistadecompras
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -17,6 +18,19 @@ class ListItemAddActivity: Activity(), AdapterView.OnItemSelectedListener {
 
         binding = ListItemAddViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val editMode: Boolean = intent.getBooleanExtra("EDIT_MODE", false)
+
+        if(editMode){
+            binding.listItemAddHeader.text = "Editar Item"
+            binding.itemAddButton.text = "Editar"
+
+            // Fill in with current values
+            binding.itemTitleTxtField.hint = UserDataBase.currentListItem.name
+            binding.itemAmountTxtField.hint = UserDataBase.currentListItem.amount.toString()
+
+            // Show delete button
+        }
 
         val unitSpinner: Spinner = binding.itemUnitSpinner
         unitSpinner.onItemSelectedListener = this
@@ -50,12 +64,30 @@ class ListItemAddActivity: Activity(), AdapterView.OnItemSelectedListener {
             val category = binding.itemCategorySpinner.selectedItem.toString()
 
             if(name.isNotEmpty() and amount.isNotEmpty()){
-                UserDataBase.currentList.listItems.add(ShoppingListItem(name, icon, amount.toInt(), unit, category))
+                try{
+                    if(editMode){
+                        val currentItem = UserDataBase.currentListItem
 
-                Snackbar.make(findViewById(android.R.id.content), "Item Criado com Sucesso!", Snackbar.LENGTH_SHORT).show()
+                        currentItem.name = name
+                        currentItem.amount = amount.toInt()
+                        currentItem.unit = unit
+                        currentItem.category = category
 
-                binding.itemTitleTxtField.text.clear()
-                binding.itemAmountTxtField.text.clear()
+                        Snackbar.make(findViewById(android.R.id.content), "Item Editado com Sucesso!", Snackbar.LENGTH_SHORT).show()
+                    }else{
+                        UserDataBase.currentList.listItems.add(ShoppingListItem(name, icon, amount.toInt(), unit, category))
+
+                        Snackbar.make(findViewById(android.R.id.content), "Item Criado com Sucesso!", Snackbar.LENGTH_SHORT).show()
+
+                        binding.itemTitleTxtField.text.clear()
+                        binding.itemAmountTxtField.text.clear()
+                    }
+
+                }catch(e: NumberFormatException){
+                    Snackbar.make(findViewById(android.R.id.content), "Valor Inválido para Quantidade", Snackbar.LENGTH_SHORT).show()
+                    binding.itemAmountTxtField.text.clear()
+                }
+
             }else{
                 Snackbar.make(findViewById(android.R.id.content), "Por Favor, Preencha todos os Campos", Snackbar.LENGTH_SHORT).show()
             }
