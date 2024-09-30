@@ -19,23 +19,8 @@ class ListHomeActivity: Activity() {
 
         Snackbar.make(findViewById(android.R.id.content), "Bem Vindo ${UserDataBase.currentUser.userName}", Snackbar.LENGTH_LONG).show()
 
-        /*val testList = listOf(
-            ShoppingList("Teste1", "https://www.gstatic.com/webp/gallery/1.jpg"),
-            ShoppingList("Teste2", "https://www.gstatic.com/webp/gallery/2.jpg"),
-            ShoppingList("Teste3", null),
-            ShoppingList("Teste4", null),
-            ShoppingList("Teste5", null),
-            ShoppingList("Teste6", null),
-            ShoppingList("Teste7", null),
-            ShoppingList("Teste8", null),
-            ShoppingList("Teste9", null),
-            ShoppingList("Teste10", null),
-            ShoppingList("Teste11", null),
-            ShoppingList("Teste12", null)
-        )*/
-
-        //Get listSource from Current User
-        val listSource = UserDataBase.currentUser.userLists
+        //Get listSource from Current User and sort
+        val listSource = UserDataBase.currentUser.userLists.sortedBy { it.title[0] }
 
         val adapter = ShoppingListAdapter(listSource, ::onListItemClicked)
         val layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
@@ -72,7 +57,7 @@ class ListHomeActivity: Activity() {
         super.onResume()
 
         // Update Recycler View Data Source
-        val listSource = UserDataBase.currentUser.userLists
+        val listSource = UserDataBase.currentUser.userLists.sortedBy { it.title[0] }
         binding.shoppingListRecylerview.adapter = ShoppingListAdapter(listSource, ::onListItemClicked)
     }
 }

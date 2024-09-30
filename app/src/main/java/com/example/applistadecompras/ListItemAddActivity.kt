@@ -2,7 +2,6 @@ package com.example.applistadecompras
 
 import android.app.Activity
 import android.os.Bundle
-import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -30,6 +29,7 @@ class ListItemAddActivity: Activity(), AdapterView.OnItemSelectedListener {
             binding.itemAmountTxtField.hint = UserDataBase.currentListItem.amount.toString()
 
             // Show delete button
+            binding.deleteListItemButton.visibility = View.VISIBLE
         }
 
         val unitSpinner: Spinner = binding.itemUnitSpinner
@@ -54,6 +54,13 @@ class ListItemAddActivity: Activity(), AdapterView.OnItemSelectedListener {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             categorySpinner.adapter = adapter
+        }
+
+        binding.deleteListItemButton.setOnClickListener {
+            UserDataBase.currentList.listItems.remove(UserDataBase.currentListItem)
+
+            Snackbar.make(findViewById(android.R.id.content), "Item Deletado com Sucesso!", Snackbar.LENGTH_SHORT).show()
+            finish()
         }
 
         binding.itemAddButton.setOnClickListener{

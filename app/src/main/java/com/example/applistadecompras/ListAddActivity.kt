@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -43,8 +44,19 @@ class ListAddActivity: AppCompatActivity() {
             showImage(UserDataBase.currentList.imageUrl)
 
             // Show delete button
+            binding.deleteListButton.visibility = View.VISIBLE
         }else{
             showImage()
+        }
+
+        binding.deleteListButton.setOnClickListener {
+            // Clear all items from this list
+            UserDataBase.currentList.listItems.clear()
+            // Remove list from user
+            UserDataBase.currentUser.userLists.remove(UserDataBase.currentList)
+
+            Snackbar.make(findViewById(android.R.id.content), "Lista Deletada com Sucesso!", Snackbar.LENGTH_SHORT).show()
+            finish()
         }
 
         binding.listAddButton.setOnClickListener {

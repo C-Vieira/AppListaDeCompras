@@ -19,6 +19,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
+    <ImageButton
+        android:id="@+id/delete_list_item_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="18dp"
+
+        android:visibility="invisible"
+        android:src="@drawable/ic_delete"
+        android:backgroundTint="@color/design_default_color_background"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
     <TextView
         android:id="@+id/item_title_lbl"
         android:layout_width="wrap_content"

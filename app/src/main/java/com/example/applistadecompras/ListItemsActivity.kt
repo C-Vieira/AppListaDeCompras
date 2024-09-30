@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applistadecompras.databinding.ListItemsViewBinding
-import com.google.android.material.snackbar.Snackbar
 
 class ListItemsActivity: Activity() {
     private lateinit var binding: ListItemsViewBinding
@@ -16,26 +15,11 @@ class ListItemsActivity: Activity() {
         binding = ListItemsViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*val testList = listOf(
-            ShoppingListItem("Item1", null),
-            ShoppingListItem("Item2", null),
-            ShoppingListItem("Item3", null),
-            ShoppingListItem("Item4", null),
-            ShoppingListItem("Item5", null),
-            ShoppingListItem("Item6", null),
-            ShoppingListItem("Item7", null),
-            ShoppingListItem("Item8", null),
-            ShoppingListItem("Item9", null),
-            ShoppingListItem("Item10", null),
-            ShoppingListItem("Item11", null),
-            ShoppingListItem("Item12", null)
-        )*/
-
         // Get listName
         binding.listItemsHeader.text = UserDataBase.currentList.title
 
-        // Get listItemsSource from Current List
-        val listItemsSource = UserDataBase.currentList.listItems
+        // Get listItemsSource from Current List and sort
+        val listItemsSource = UserDataBase.currentList.listItems.sortedBy { it.name[0] }
 
         val adapter = ShoppingListItemAdapter(listItemsSource, ::onListItemClicked)
         val layoutManager = LinearLayoutManager(this)
@@ -75,7 +59,7 @@ class ListItemsActivity: Activity() {
         binding.listItemsHeader.text = UserDataBase.currentList.title
 
         // Update Recycler View Data Source
-        val listItemsSource = UserDataBase.currentList.listItems
+        val listItemsSource = UserDataBase.currentList.listItems.sortedBy { it.name[0] }
         binding.shoppingListItemsRecylerview.adapter = ShoppingListItemAdapter(listItemsSource, ::onListItemClicked)
     }
 }
