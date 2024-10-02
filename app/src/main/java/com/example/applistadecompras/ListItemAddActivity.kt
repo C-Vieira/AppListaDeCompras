@@ -1,11 +1,13 @@
 package com.example.applistadecompras
 
 import android.app.Activity
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.core.graphics.drawable.toDrawable
 import com.example.applistadecompras.databinding.ListItemAddViewBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -65,10 +67,16 @@ class ListItemAddActivity: Activity(), AdapterView.OnItemSelectedListener {
 
         binding.itemAddButton.setOnClickListener{
             val name = binding.itemTitleTxtField.text.toString()
-            val icon = null
             val amount = binding.itemAmountTxtField.text.toString()
             val unit = binding.itemUnitSpinner.selectedItem.toString()
             val category = binding.itemCategorySpinner.selectedItem.toString()
+            var icon: Int? = null
+
+            when (category) {
+                "fruta" -> icon = R.drawable.ic_icecream
+                "verdura" -> icon = R.drawable.ic_cookie
+                "carne" -> icon = R.drawable.ic_food
+            }
 
             if(name.isNotEmpty() and amount.isNotEmpty()){
                 try{

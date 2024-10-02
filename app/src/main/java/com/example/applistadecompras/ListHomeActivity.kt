@@ -1,15 +1,18 @@
 package com.example.applistadecompras
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applistadecompras.databinding.ListHomeViewBinding
 import com.google.android.material.snackbar.Snackbar
 
-class ListHomeActivity: Activity() {
+class ListHomeActivity: AppCompatActivity(){
     private lateinit var binding: ListHomeViewBinding
+    private lateinit var adapter: ShoppingListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,12 +20,12 @@ class ListHomeActivity: Activity() {
         binding = ListHomeViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Snackbar.make(findViewById(android.R.id.content), "Bem Vindo ${UserDataBase.currentUser.userName}", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(findViewById(android.R.id.content), "Bem Vindo ${UserDataBase.currentUser.userName}", Snackbar.LENGTH_SHORT).show()
 
         //Get listSource from Current User and sort
         val listSource = UserDataBase.currentUser.userLists.sortedBy { it.title[0] }
 
-        val adapter = ShoppingListAdapter(listSource, ::onListItemClicked)
+        adapter = ShoppingListAdapter(listSource, ::onListItemClicked)
         val layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
 
         binding.shoppingListRecylerview.adapter = adapter
@@ -43,6 +46,23 @@ class ListHomeActivity: Activity() {
                 startActivity(it)
             }
         }
+
+        val listSearchView: SearchView = binding.listSearchView
+        listSearchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                //val filteredResults = adapter.filter.filter(newText)
+                //adapter.setNewData(filteredResults.values)
+                adapter.filter.filter(newText)
+
+                Snackbar.make(findViewById(android.R.id.content), "Pesquisando...", Snackbar.LENGTH_SHORT).show()
+
+                return true
+            }
+        })
     }
 
     private fun onListItemClicked(list: ShoppingList){

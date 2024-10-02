@@ -14,7 +14,7 @@ class ShoppingListItemAdapter (
 ) : RecyclerView.Adapter<ShoppingListItemAdapter.ViewHolder>() {
 
     inner class ViewHolder(
-        private val binding: ShoppingListItemPreviewBinding
+        var binding: ShoppingListItemPreviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var currentItem: ShoppingListItem? = null
@@ -33,8 +33,19 @@ class ShoppingListItemAdapter (
             binding.listItemName.text = item.name
             binding.listItemAmount.text = item.amount.toString() + " " + item.unit
 
+            binding.itemCheckbox.isSelected = item.isSelected
+            binding.itemCheckbox.setOnClickListener {
+                if(!item.isSelected) binding.root.setBackgroundColor(Color.LTGRAY)
+                else binding.root.setBackgroundColor(Color.WHITE)
+
+                val selectedItem = UserDataBase.currentList.listItems.find { it === item }
+                if (selectedItem != null) {
+                    selectedItem.isSelected = !selectedItem.isSelected
+                }
+            }
+
             Glide.with(binding.root.context)
-                .load(item.iconUrl)
+                .load(item.icon)
                 .error(ColorDrawable(Color.BLACK))
                 .placeholder(ColorDrawable(Color.LTGRAY))
                 .centerCrop()
@@ -50,6 +61,11 @@ class ShoppingListItemAdapter (
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+
+        holder.binding.itemCheckbox.isChecked = item.isSelected
+        if(item.isSelected) holder.binding.root.setBackgroundColor(Color.LTGRAY)
+        else holder.binding.root.setBackgroundColor(Color.WHITE)
+
         holder.bind(item)
     }
 

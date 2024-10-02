@@ -19,7 +19,10 @@ class ListItemsActivity: Activity() {
         binding.listItemsHeader.text = UserDataBase.currentList.title
 
         // Get listItemsSource from Current List and sort
-        val listItemsSource = UserDataBase.currentList.listItems.sortedBy { it.name[0] }
+        val listItemsSource = UserDataBase.currentList.listItems
+            .sortedBy { it.name[0] }
+            .sortedBy { it.category }
+            .sortedBy { it.isSelected }
 
         val adapter = ShoppingListItemAdapter(listItemsSource, ::onListItemClicked)
         val layoutManager = LinearLayoutManager(this)
@@ -59,7 +62,10 @@ class ListItemsActivity: Activity() {
         binding.listItemsHeader.text = UserDataBase.currentList.title
 
         // Update Recycler View Data Source
-        val listItemsSource = UserDataBase.currentList.listItems.sortedBy { it.name[0] }
+        val listItemsSource = UserDataBase.currentList.listItems
+            .sortedBy { it.name[0] }
+            .sortedBy { it.category }
+            .sortedBy { it.isSelected }
         binding.shoppingListItemsRecylerview.adapter = ShoppingListItemAdapter(listItemsSource, ::onListItemClicked)
     }
 }
