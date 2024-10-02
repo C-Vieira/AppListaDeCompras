@@ -2,6 +2,7 @@ package com.example.applistadecompras
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Patterns
 import com.example.applistadecompras.databinding.UserRegisterViewBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -22,28 +23,40 @@ class UserRegisterActivity : Activity() {
 
             if(nameTxtFieldString.isNotEmpty()){
                 if(emailTxtFieldString.isNotEmpty()){
-                    if(passwordTxtFieldString.isNotEmpty()){
-                        if(confirmPasswordTxtFieldString.isNotEmpty()){
+                    if(Patterns.EMAIL_ADDRESS.matcher(emailTxtFieldString).matches()){
+                        if(passwordTxtFieldString.isNotEmpty()) {
+                            if (confirmPasswordTxtFieldString.isNotEmpty()) {
 
-                            // Check if Password equals Confirmed Password
-                            if(passwordTxtFieldString == confirmPasswordTxtFieldString){
-                                val name: String = nameTxtFieldString
-                                val email: String = emailTxtFieldString
-                                val password: String = passwordTxtFieldString
+                                // Check if Password equals Confirmed Password
+                                if (passwordTxtFieldString == confirmPasswordTxtFieldString) {
+                                    val name: String = nameTxtFieldString
+                                    val email: String = emailTxtFieldString
+                                    val password: String = passwordTxtFieldString
 
-                                UserDataBase.addUser(User(name, email, password))
+                                    UserDataBase.addUser(User(name, email, password))
 
-                                Snackbar.make(findViewById(android.R.id.content), "Usuário Cadastrado com Sucesso!", Snackbar.LENGTH_LONG).show()
+                                    Snackbar.make(
+                                        findViewById(android.R.id.content),
+                                        "Usuário Cadastrado com Sucesso!",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
 
-                                clearTextFields()
-                            }else{
-                                Snackbar.make(findViewById(android.R.id.content), "Senha e Confirmação Diferentes", Snackbar.LENGTH_LONG).show()
+                                    clearTextFields()
+                                } else {
+                                    Snackbar.make(
+                                        findViewById(android.R.id.content),
+                                        "Senha e Confirmação Diferentes",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
                             }
                         }
+                    }else{
+                        Snackbar.make(findViewById(android.R.id.content), "Formato de Email Inválido", Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }else{
-                Snackbar.make(findViewById(android.R.id.content), "Por Favor, Preencha Todos os Campos", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(findViewById(android.R.id.content), "Por Favor, Preencha Todos os Campos", Snackbar.LENGTH_SHORT).show()
             }
         }
 

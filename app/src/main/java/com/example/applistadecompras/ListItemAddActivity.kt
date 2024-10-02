@@ -111,8 +111,8 @@ class ListItemAddActivity: Activity(), AdapterView.OnItemSelectedListener {
 
     // NOTE: This is called immediately when the activity is invoked
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-        val item = parent.getItemAtPosition(pos)
-        Snackbar.make(findViewById(android.R.id.content), "Item Selected: $item", Snackbar.LENGTH_LONG).show()
+        //val item = parent.getItemAtPosition(pos)
+        //Snackbar.make(findViewById(android.R.id.content), "Item Selected: $item", Snackbar.LENGTH_LONG).show()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
