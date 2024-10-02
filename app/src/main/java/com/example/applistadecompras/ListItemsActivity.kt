@@ -41,7 +41,8 @@ class ListItemsActivity: Activity() {
             // Invoke ListAddActivity for Editing
             Intent(applicationContext, ListAddActivity::class.java).also {
                 it.putExtra("EDIT_MODE", true)
-                startActivity(it)
+                //startActivity(it)
+                startActivityForResult(it, 1)
             }
         }
     }
@@ -52,6 +53,14 @@ class ListItemsActivity: Activity() {
             UserDataBase.currentListItem = item
             it.putExtra("EDIT_MODE", true)
             startActivity(it)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if((requestCode == 1) && UserDataBase.justDeleted){
+            UserDataBase.justDeleted = false
+            finish()
         }
     }
 

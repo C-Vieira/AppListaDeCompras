@@ -12,6 +12,8 @@ object UserDataBase{
     var currentList: ShoppingList = ShoppingList("empty", "empty", mutableListOf())
     var currentListItem: ShoppingListItem = ShoppingListItem("empty", null, 0, "un", "fruta")
 
+    var justDeleted: Boolean = false
+
     fun addUser(newUser: User){
         users.add(newUser)
     }

@@ -54,6 +54,10 @@ class ListAddActivity: AppCompatActivity() {
             UserDataBase.currentList.listItems.clear()
             // Remove list from user
             UserDataBase.currentUser.userLists.remove(UserDataBase.currentList)
+            // Reset current list
+            UserDataBase.currentList = ShoppingList("empty", "empty", mutableListOf())
+            // Set justDeleted flag
+            UserDataBase.justDeleted = true
 
             Snackbar.make(findViewById(android.R.id.content), "Lista Deletada com Sucesso!", Snackbar.LENGTH_SHORT).show()
             finish()
