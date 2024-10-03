@@ -54,15 +54,27 @@ class ListHomeActivity: AppCompatActivity(){
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                //val filteredResults = adapter.filter.filter(newText)
-                //adapter.setNewData(filteredResults.values)
-                adapter.filter.filter(newText)
 
-                Snackbar.make(findViewById(android.R.id.content), "Pesquisando...", Snackbar.LENGTH_SHORT).show()
+                val results = filter(newText).sortedBy { it.title[0] }
+                binding.shoppingListRecylerview.adapter = ShoppingListAdapter(results, ::onListItemClicked)
 
                 return true
             }
         })
+    }
+
+    private fun filter(query: String?): List<ShoppingList>{
+        val filteredList = ArrayList<ShoppingList>()
+
+        if (query != null){
+            for(i in UserDataBase.currentUser.userLists){
+                if(i.title.lowercase().contains(query.lowercase())){
+                    filteredList.add(i)
+                }
+            }
+        }
+
+        return filteredList
     }
 
     private fun onListItemClicked(list: ShoppingList){

@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        //Hello World!
         Glide.with(this)
             .load("https://cdn-icons-png.flaticon.com/512/8539/8539402.png")
             .centerCrop()

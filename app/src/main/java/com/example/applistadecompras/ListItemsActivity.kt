@@ -3,6 +3,8 @@ package com.example.applistadecompras
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applistadecompras.databinding.ListItemsViewBinding
 
@@ -45,6 +47,35 @@ class ListItemsActivity: Activity() {
                 startActivityForResult(it, 1)
             }
         }
+
+        val searchView: SearchView = binding.listItemSearchView
+        searchView.setOnQueryTextListener(object : OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                val results = filter(newText).sortedBy { it.name[0] }
+                binding.shoppingListItemsRecylerview.adapter = ShoppingListItemAdapter(results, ::onListItemClicked)
+
+                return true
+            }
+        })
+    }
+
+    private fun filter(query: String?): List<ShoppingListItem>{
+        val filteredList = ArrayList<ShoppingListItem>()
+
+        if (query != null){
+            for(i in UserDataBase.currentList.listItems){
+                if(i.name.lowercase().contains(query.lowercase())){
+                    filteredList.add(i)
+                }
+            }
+        }
+
+        return filteredList
     }
 
     private fun onListItemClicked(item: ShoppingListItem){
